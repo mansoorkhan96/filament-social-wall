@@ -24,7 +24,7 @@ class FilamentSocialWallServiceProvider extends PluginServiceProvider
     ];
 
     protected array $styles = [
-        'plugin-filament-social-wall' => __DIR__ . '/../resources/dist/filament-social-wall.css',
+        'plugin-filament-social-wall' => __DIR__.'/../resources/dist/filament-social-wall.css',
     ];
 
     // TODO: remove/cleanup at the end if not required

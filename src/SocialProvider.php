@@ -2,10 +2,10 @@
 
 namespace Mansoor\FilamentSocialWall;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
 
 class SocialProvider extends Model
 {

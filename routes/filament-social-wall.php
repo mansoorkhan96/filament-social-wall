@@ -1,9 +1,8 @@
 <?php
 
+use Google\Service\YouTube;
 use Illuminate\Support\Facades\Route;
 use Mansoor\FilamentSocialWall\Http\Controllers\SocialAccountController;
-
-use Google\Service\YouTube;
 
 Route::get('test', function () {
     $client = new Google_Client();

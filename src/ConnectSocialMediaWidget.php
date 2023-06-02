@@ -9,7 +9,7 @@ class ConnectSocialMediaWidget extends Widget
 {
     protected static string $view = 'filament-social-wall::connect-social-media-widget';
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected function getViewData(): array
     {
