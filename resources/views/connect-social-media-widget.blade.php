@@ -4,7 +4,7 @@
 
         <div class="flex flex-col sm:flex-row gap-4">
             @foreach (\Mansoor\FilamentSocialWall\Enums\SocialProviderName::cases() as $provider)
-                <x-filament-social-wall::social-button
+                <x-filament-social-wall::social-connect-button
                     :icon="$provider->value"
                     style="background-color: {{ $provider->backgroundColor() }}"
                     :link="$socialProviders->contains($provider)
@@ -13,7 +13,7 @@
                     "
                 >
                     {{ $socialProviders->contains($provider) ? 'Connected' : $provider->name }}
-                </x-filament-social-wall::social-button>
+                </x-filament-social-wall::social-connect-button>
             @endforeach
         </div>
     </x-filament::card>
