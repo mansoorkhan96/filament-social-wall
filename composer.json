@@ -18,8 +18,11 @@
     "require": {
         "php": "^8.0",
         "filament/filament": "^2.0",
-        "spatie/laravel-package-tools": "^1.13.5",
-        "illuminate/contracts": "^9.0|^10.0"
+        "google/apiclient": "^2.15",
+        "illuminate/contracts": "^9.0|^10.0",
+        "laravel/socialite": "^5.6",
+        "socialiteproviders/instagram": "^5.0",
+        "spatie/laravel-package-tools": "^1.13.5"
     },
     "require-dev": {
         "laravel/pint": "^1.0",

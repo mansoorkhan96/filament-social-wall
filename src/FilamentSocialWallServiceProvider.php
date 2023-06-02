@@ -18,16 +18,16 @@ class FilamentSocialWallServiceProvider extends PluginServiceProvider
     ];
 
     protected array $widgets = [
-        // CustomWidget::class,
+        ConnectSocialMediaWidget::class,
     ];
 
     protected array $styles = [
-        'plugin-filament-social-wall' => __DIR__.'/../resources/dist/filament-social-wall.css',
+        'plugin-filament-social-wall' => __DIR__ . '/../resources/dist/filament-social-wall.css',
     ];
 
-    protected array $scripts = [
-        'plugin-filament-social-wall' => __DIR__.'/../resources/dist/filament-social-wall.js',
-    ];
+    // protected array $scripts = [
+    //     'plugin-filament-social-wall' => __DIR__ . '/../resources/dist/filament-social-wall.js',
+    // ];
 
     // protected array $beforeCoreScripts = [
     //     'plugin-filament-social-wall' => __DIR__ . '/../resources/dist/filament-social-wall.js',
@@ -35,6 +35,11 @@ class FilamentSocialWallServiceProvider extends PluginServiceProvider
 
     public function configurePackage(Package $package): void
     {
-        $package->name(static::$name);
+        $package
+            ->name(static::$name)
+            ->hasConfigFile()
+            ->hasMigration('create_social_providers_table')
+            ->hasViews('filament-social-wall')
+            ->hasRoute('filament-social-wall');
     }
 }
