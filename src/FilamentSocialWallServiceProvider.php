@@ -2,8 +2,8 @@
 
 namespace Mansoor\FilamentSocialWall;
 
-use Livewire\Livewire;
 use Filament\PluginServiceProvider;
+use Livewire\Livewire;
 use Mansoor\FilamentSocialWall\Http\Livewire\SocialWall;
 use Spatie\LaravelPackageTools\Package;
 
