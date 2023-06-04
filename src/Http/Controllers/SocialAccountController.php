@@ -11,9 +11,9 @@ use Mansoor\FilamentSocialWall\SocialProvider;
 
 class SocialAccountController extends Controller
 {
-    public function redirectToProvider(Request $request, string $provider)
+    public function redirectToProvider(Request $request, SocialProviderName $provider)
     {
-        $socialite = Socialite::driver($provider);
+        $socialite = Socialite::driver($provider->value);
 
         if ($provider === SocialProviderName::Google) {
             $socialite
@@ -24,7 +24,7 @@ class SocialAccountController extends Controller
         return $socialite->redirect();
     }
 
-    public function handleProviderCallback(Request $request, string $provider)
+    public function handleProviderCallback(Request $request, SocialProviderName $provider)
     {
         /**
          * TODO: \App\Models\Website::current() makes plugin not reusable
@@ -32,13 +32,11 @@ class SocialAccountController extends Controller
         $websiteId = \App\Models\Website::current()?->id;
 
         try {
-            $socialAccount = Socialite::driver($provider)->user();
+            $socialAccount = Socialite::driver($provider->value)->user();
         } catch (\Throwable $th) {
-            $socialProviderName = ucfirst($provider);
-
             Notification::make()
                 ->danger()
-                ->title("Could not connect {$socialProviderName} account!")
+                ->title("Could not connect {$provider->name} account!")
                 ->body('Please try again or contact Admin.')
                 ->send();
 
@@ -48,7 +46,7 @@ class SocialAccountController extends Controller
         SocialProvider::updateOrCreate(
             [
                 'website_id' => $websiteId,
-                'provider_name' => SocialProviderName::tryFrom($provider),
+                'provider_name' => $provider,
             ],
             ['token' => $socialAccount->token, 'refresh_token' => $socialAccount->refreshToken]
         );
