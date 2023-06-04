@@ -3,8 +3,8 @@
 namespace Mansoor\FilamentSocialWall;
 
 use Filament\PluginServiceProvider;
-use Spatie\LaravelPackageTools\Package;
 use Mansoor\FilamentSocialWall\Widgets\ConnectSocialMediaWidget;
+use Spatie\LaravelPackageTools\Package;
 
 class FilamentSocialWallServiceProvider extends PluginServiceProvider
 {
@@ -23,7 +23,7 @@ class FilamentSocialWallServiceProvider extends PluginServiceProvider
     ];
 
     protected array $styles = [
-        'plugin-filament-social-wall' => __DIR__ . '/../resources/dist/filament-social-wall.css',
+        'plugin-filament-social-wall' => __DIR__.'/../resources/dist/filament-social-wall.css',
     ];
 
     public function configurePackage(Package $package): void

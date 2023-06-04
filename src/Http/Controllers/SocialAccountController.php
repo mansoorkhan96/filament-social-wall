@@ -2,12 +2,12 @@
 
 namespace Mansoor\FilamentSocialWall\Http\Controllers;
 
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Filament\Notifications\Notification;
 use Laravel\Socialite\Facades\Socialite;
-use Mansoor\FilamentSocialWall\Models\SocialProvider;
 use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
+use Mansoor\FilamentSocialWall\Models\SocialProvider;
 
 class SocialAccountController extends Controller
 {

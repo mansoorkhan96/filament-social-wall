@@ -7,9 +7,13 @@ use Google\Service\YouTube\ThumbnailDetails;
 class SocialThumbnail
 {
     public readonly string $default;
+
     public readonly string $medium;
+
     public readonly string $high;
+
     public readonly string $standard;
+
     public readonly string $maxres;
 
     public function __construct(ThumbnailDetails $thumbnails)

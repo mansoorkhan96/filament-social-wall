@@ -7,12 +7,19 @@ use Google\Service\YouTube\Video;
 class SocialContentItem
 {
     public readonly string $title;
+
     public readonly string $description;
+
     public readonly SocialThumbnail $thumbnails;
+
     public readonly string $player;
+
     public readonly string $link;
+
     public readonly int $viewCount;
+
     public readonly int $likeCount;
+
     public readonly int $commentCount;
 
     public function __construct(Video $item)

@@ -3,13 +3,13 @@
 namespace Mansoor\FilamentSocialWall\Services;
 
 use Google\Client;
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Builder;
 use Google\Service\YouTube as YouTubeService;
 use Google\Service\YouTube\VideoListResponse;
-use Mansoor\FilamentSocialWall\Models\SocialProvider;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
 use Mansoor\FilamentSocialWall\Exceptions\SocialAccountNotConnected;
+use Mansoor\FilamentSocialWall\Models\SocialProvider;
 use Mansoor\FilamentSocialWall\Responses\SocialContentItem;
 
 class YouTube
@@ -48,8 +48,6 @@ class YouTube
 
     /**
      * Raw response from Google Youtube Service
-     *
-     * @return VideoListResponse
      */
     public function getVideos(): VideoListResponse
     {
