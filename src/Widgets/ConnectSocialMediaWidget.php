@@ -1,9 +1,10 @@
 <?php
 
-namespace Mansoor\FilamentSocialWall;
+namespace Mansoor\FilamentSocialWall\Widgets;
 
 use Filament\Widgets\Widget;
 use Illuminate\Database\Eloquent\Builder;
+use Mansoor\FilamentSocialWall\Models\SocialProvider;
 
 class ConnectSocialMediaWidget extends Widget
 {

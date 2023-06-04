@@ -1,6 +1,6 @@
 <?php
 
-namespace Mansoor\FilamentSocialWall;
+namespace Mansoor\FilamentSocialWall\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
