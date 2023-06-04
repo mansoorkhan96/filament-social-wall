@@ -1,28 +1,15 @@
 <?php
 
-use Google\Service\YouTube;
 use Illuminate\Support\Facades\Route;
 use Mansoor\FilamentSocialWall\Http\Controllers\SocialAccountController;
+use Mansoor\FilamentSocialWall\Services\YouTube as ServicesYouTube;
 
 Route::get('test', function () {
-    $client = new Google_Client();
-    $client->setApplicationName('API code samples');
-    $client->setScopes([
-        'https://www.googleapis.com/auth/youtube.readonly',
-    ]);
-    $client->setAccessToken(env('GOOGLE_TOKEN'));
-    $client->refreshToken(env('GOOGLE_REFRESH_TOKEN'));
-    $service = new YouTube($client);
-
-    // player gives the iframe video player
-    // snippet gives access to thumbnails.
-    $response = $service->videos->listVideos('player', [
-        'chart' => 'mostPopular',
-    ]);
-    dd($response);
+    $y = new ServicesYouTube;
+    dd($y->getVideoList());
 });
 
-Route::middleware('web')->group(function () {
+Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/social/{provider}/redirect', [SocialAccountController::class, 'redirectToProvider'])
         ->name('social.provider.redirect');
 
