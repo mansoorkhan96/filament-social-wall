@@ -3,6 +3,7 @@
 namespace Mansoor\FilamentSocialWall\Responses;
 
 use Google\Service\YouTube\Video;
+use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
 
 class SocialContentItem
 {
@@ -22,6 +23,8 @@ class SocialContentItem
 
     public readonly int $commentCount;
 
+    public readonly SocialProviderName $provider;
+
     public function __construct(Video $item)
     {
         if ($item instanceof Video) {
@@ -38,5 +41,7 @@ class SocialContentItem
         $this->viewCount = $item->getStatistics()->getViewCount();
         $this->likeCount = $item->getStatistics()->getLikeCount();
         $this->commentCount = $item->getStatistics()->getCommentCount();
+        // TODO: lets change provider from google to youtube. Makes sense for icons, login, and overall. niche and specific. Google is very top-level as it has many services. we can also add socialprovider = youtube. hence youtube profile avatar etc.
+        $this->provider = SocialProviderName::Google;
     }
 }

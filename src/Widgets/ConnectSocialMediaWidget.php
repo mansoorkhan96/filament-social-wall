@@ -16,6 +16,7 @@ class ConnectSocialMediaWidget extends Widget
     {
         /**
          * TODO: \App\Models\Website::current() makes plugin not reusable
+         * TODO: We can also get the avatar from provider and show it inside our widget that would make it more friendly. User will also be able to see which account they have connect.
          */
         return [
             'socialProviders' => SocialProvider::query()
