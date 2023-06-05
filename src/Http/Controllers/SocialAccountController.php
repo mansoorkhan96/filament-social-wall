@@ -21,6 +21,11 @@ class SocialAccountController extends Controller
                 ->with(['access_type' => 'offline', 'prompt' => 'consent select_account']);
         }
 
+        // if ($provider === SocialProviderName::Facebook) {
+        //     $socialite
+        //         ->scopes(['pages_manage_posts', 'pages_read_engagement', 'pages_show_list']);
+        // }
+
         return $socialite->redirect();
     }
 
@@ -48,7 +53,11 @@ class SocialAccountController extends Controller
                 'website_id' => $websiteId,
                 'provider_name' => $provider,
             ],
-            ['token' => $socialAccount->token, 'refresh_token' => $socialAccount->refreshToken]
+            [
+                'token' => $socialAccount->token,
+                'refresh_token' => $socialAccount->refreshToken,
+                'token_secret' => $socialAccount->tokenSecret,
+            ]
         );
 
         return redirect("/admin/websites/{$websiteId}/edit");

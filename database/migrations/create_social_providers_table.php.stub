@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('provider_name');
             $table->tinyText('token')->nullable();
             $table->tinyText('refresh_token')->nullable();
+            $table->tinyText('token_secret')->nullable();
             $table->timestamps();
         });
     }
