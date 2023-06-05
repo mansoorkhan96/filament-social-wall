@@ -17,9 +17,11 @@
     ],
     "require": {
         "php": "^8.0",
+        "atymic/twitter": "^3.2",
         "filament/filament": "^2.0",
         "google/apiclient": "^2.15",
         "illuminate/contracts": "^9.0|^10.0",
+        "joelbutcher/laravel-facebook-graph": "^1.2",
         "laravel/socialite": "^5.6",
         "socialiteproviders/instagram": "^5.0",
         "spatie/laravel-package-tools": "^1.13.5"
@@ -59,7 +61,8 @@
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
             "pestphp/pest-plugin": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "php-http/discovery": true
         }
     },
     "extra": {
