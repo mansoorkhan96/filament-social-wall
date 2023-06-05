@@ -9,7 +9,7 @@ enum SocialProviderName: string
     case Twitter = 'twitter';
     case Google = 'google';
 
-    public function backgroundColor(): string
+    public function color(): string
     {
         return match ($this) {
             self::Facebook => '#4267B2',

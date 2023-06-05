@@ -6,7 +6,7 @@
             @foreach (\Mansoor\FilamentSocialWall\Enums\SocialProviderName::cases() as $provider)
                 <x-filament-social-wall::social-connect-button
                     :icon="$provider->value"
-                    style="background-color: {{ $provider->backgroundColor() }}"
+                    style="background-color: {{ $provider->color() }}"
                     :link="$socialProviders->contains($provider)
                         ? null
                         : route('social.provider.redirect', $provider->value)
