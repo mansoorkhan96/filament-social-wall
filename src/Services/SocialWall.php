@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 class SocialWall
 {
     protected YouTube $youtube;
+
     protected Facebook $facebook;
 
     public function __construct()
@@ -15,7 +16,7 @@ class SocialWall
         $this->youtube = new YouTube;
     }
 
-    public function getData(int | string $facebookPageId): Collection
+    public function getData(int|string $facebookPageId): Collection
     {
         return Collection::make()
             ->merge($this->youtube->getVideoList())

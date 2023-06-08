@@ -8,8 +8,11 @@ use Illuminate\Support\Arr;
 class Attachment
 {
     public readonly ?string $title;
+
     public readonly ?string $description;
+
     public readonly ?string $url;
+
     public readonly ?string $imageUrl;
 
     public function __construct(GraphNode $attachment)
