@@ -37,11 +37,11 @@ class Facebook
             ->map(fn ($item) => new SocialContentItem($item));
     }
 
-    public function getPageFeed(string|int $pageId): GraphEdge
+    public function getPageFeed(string|int $pageId, int $perPage = 10): GraphEdge
     {
         return $this->service->get("/{$pageId}/feed", [
             'fields' => 'id,created_time,message,from,full_picture,permalink_url,likes.limit(0).summary(true),comments.limit(0).summary(true)',
-            'limit' => 10,
+            'limit' => $perPage,
             'is_published' => true,
         ])->getGraphEdge();
     }
