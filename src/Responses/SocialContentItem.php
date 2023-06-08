@@ -2,34 +2,53 @@
 
 namespace Mansoor\FilamentSocialWall\Responses;
 
+use Facebook\GraphNode\GraphNode;
 use Google\Service\YouTube\Video;
+use Illuminate\Support\Arr;
 use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
 
 class SocialContentItem
 {
-    public readonly string $title;
+    public readonly ?string $title;
 
-    public readonly string $description;
+    public readonly ?string $description;
 
-    public readonly SocialThumbnail $thumbnails;
+    public readonly ?SocialThumbnail $thumbnails;
 
-    public readonly string $player;
+    public readonly ?string $imageUrl;
 
-    public readonly string $link;
+    public readonly ?string $player;
 
-    public readonly int $viewCount;
+    public readonly ?string $link;
 
-    public readonly int $likeCount;
+    public readonly ?int $viewCount;
 
-    public readonly int $commentCount;
+    public readonly ?int $likeCount;
+
+    public readonly ?int $commentCount;
 
     public readonly SocialProviderName $provider;
 
-    public function __construct(Video $item)
+    public function __construct(Video | GraphNode $item)
     {
         if ($item instanceof Video) {
             $this->fromYoutube($item);
         }
+
+        if ($item instanceof GraphNode) {
+            $this->fromFacebook($item);
+        }
+    }
+
+    public function fromFacebook(GraphNode $item): void
+    {
+        $this->description = $item->getField('message');
+        $this->link = $item->getField('permalink_url');
+        $this->imageUrl = $item->getField('full_picture');
+        $this->likeCount = Arr::get($item->getField('likes')->getMetaData(), 'summary.total_count');
+        $this->commentCount = Arr::get($item->getField('comments')->getMetaData(), 'summary.total_count');
+
+        $this->provider = SocialProviderName::Facebook;
     }
 
     public function fromYoutube(Video $item): void

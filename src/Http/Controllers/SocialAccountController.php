@@ -15,16 +15,25 @@ class SocialAccountController extends Controller
     {
         $socialite = Socialite::driver($provider->value);
 
+        // if ($provider === SocialProviderName::Twitter) {
+        //     $socialite->scopes(['offline.access', 'users.read', 'tweet.read']);
+        // }
+
         if ($provider === SocialProviderName::Google) {
             $socialite
                 ->scopes(['https://www.googleapis.com/auth/youtube.readonly'])
                 ->with(['access_type' => 'offline', 'prompt' => 'consent select_account']);
         }
 
-        // if ($provider === SocialProviderName::Facebook) {
-        //     $socialite
-        //         ->scopes(['pages_manage_posts', 'pages_read_engagement', 'pages_show_list']);
-        // }
+        if ($provider === SocialProviderName::Facebook) {
+            $socialite
+                ->usingGraphVersion('v17.0')
+                ->scopes([
+                    'pages_read_user_content',
+                    'pages_show_list',
+                    // 'instagram_basic',
+                ]);
+        }
 
         return $socialite->redirect();
     }
@@ -54,6 +63,7 @@ class SocialAccountController extends Controller
                 'provider_name' => $provider,
             ],
             [
+                'provider_user_id' => $socialAccount->id,
                 'token' => $socialAccount->token,
                 'refresh_token' => $socialAccount->refreshToken,
                 'token_secret' => $socialAccount->tokenSecret,

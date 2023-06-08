@@ -19,6 +19,7 @@ return new class extends Migration
             }
 
             $table->string('provider_name');
+            $table->unsignedBigInteger('provider_user_id')->nullable();
             $table->tinyText('token')->nullable();
             $table->tinyText('refresh_token')->nullable();
             $table->tinyText('token_secret')->nullable();
