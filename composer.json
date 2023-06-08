@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "^8.0",
+        "abraham/twitteroauth": "^5.0",
         "atymic/twitter": "^3.2",
         "filament/filament": "^2.0",
         "google/apiclient": "^2.15",
