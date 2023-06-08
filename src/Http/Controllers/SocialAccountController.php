@@ -29,8 +29,10 @@ class SocialAccountController extends Controller
             $socialite
                 ->usingGraphVersion('v17.0')
                 ->scopes([
-                    'pages_read_user_content',
                     'pages_show_list',
+                    'pages_read_user_content',
+                    'pages_manage_metadata',
+                    'pages_read_engagement ',
                     // 'instagram_basic',
                 ]);
         }

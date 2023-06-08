@@ -12,8 +12,8 @@ use Mansoor\FilamentSocialWall\Services\YouTube;
 Route::get('test', function () {
     // $y = new YouTube;
     // dd($y->getVideoList());
-    // $f = new Facebook;
-    // dd($f->getPageFeedCollection(pageId));
+    $f = new Facebook;
+    dd($f->getPageFeed(22));
 
     $provider = SocialProvider::query()
         ->whereBelongsToOwner()

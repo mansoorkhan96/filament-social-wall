@@ -37,10 +37,22 @@ class Facebook
             ->map(fn ($item) => new SocialContentItem($item));
     }
 
-    public function getPageFeed(string|int $pageId, int $perPage = 10): GraphEdge
+    public function getPageFeed(string|int $pageId, int $perPage = 20): GraphEdge
     {
+        /**
+         * TODO: situation => /me/accounts endpoint should give us list of pages a user can manage, but
+         *
+         * 1) When a user has two pages and he is admin on one. After oauth access, we get data for one page i.e the other page from above endpoint
+         * 2) If a user selects or give us permission to only one page which he is admin on, we get no data with above endpoint
+         * 3) If a user selects or give us permission to only one page which he is not admin on, we get for that one page only.
+         *
+         * Need to find out, how we can automagically get page ids for user without asking them to give us manually.
+         *
+         * for now: this service requires pageId for simplicity and POC
+         */
+
         return $this->service->get("/{$pageId}/feed", [
-            'fields' => 'id,created_time,message,from,full_picture,permalink_url,likes.limit(0).summary(true),comments.limit(0).summary(true)',
+            'fields' => 'id,created_time,message,from,full_picture,permalink_url,likes.limit(0).summary(true),comments.limit(0).summary(true),attachments{unshimmed_url,description,media,title}',
             'limit' => $perPage,
             'is_published' => true,
         ])->getGraphEdge();

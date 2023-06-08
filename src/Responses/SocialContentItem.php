@@ -2,6 +2,7 @@
 
 namespace Mansoor\FilamentSocialWall\Responses;
 
+use Facebook\GraphNode\GraphEdge;
 use Facebook\GraphNode\GraphNode;
 use Google\Service\YouTube\Video;
 use Illuminate\Support\Arr;
@@ -27,6 +28,8 @@ class SocialContentItem
 
     public readonly ?int $commentCount;
 
+    public readonly ?Attachment $attachment;
+
     public readonly SocialProviderName $provider;
 
     public function __construct(Video|GraphNode $item)
@@ -47,6 +50,10 @@ class SocialContentItem
         $this->imageUrl = $item->getField('full_picture');
         $this->likeCount = Arr::get($item->getField('likes')->getMetaData(), 'summary.total_count');
         $this->commentCount = Arr::get($item->getField('comments')->getMetaData(), 'summary.total_count');
+
+        if ($item->getField('attachments') instanceof GraphEdge) {
+            $this->attachment = new Attachment($item->getField('attachments')->getIterator()->current());
+        }
 
         $this->provider = SocialProviderName::Facebook;
     }
