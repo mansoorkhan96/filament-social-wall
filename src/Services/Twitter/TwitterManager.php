@@ -2,11 +2,11 @@
 
 namespace Mansoor\FilamentSocialWall\Services\Twitter;
 
-use Illuminate\Support\Manager;
-use Tests\Doubles\FakeTwitterClient;
 use Abraham\TwitterOAuth\TwitterOAuth;
-use Mansoor\FilamentSocialWall\Models\SocialProvider;
+use Illuminate\Support\Manager;
 use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
+use Mansoor\FilamentSocialWall\Models\SocialProvider;
+use Tests\Doubles\FakeTwitterClient;
 
 final class TwitterManager extends Manager
 {

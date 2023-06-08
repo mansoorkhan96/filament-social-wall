@@ -1,13 +1,12 @@
 <?php
 
+use Abraham\TwitterOAuth\TwitterOAuth;
 use Atymic\Twitter\Facade\Twitter;
 use Illuminate\Support\Facades\Route;
-use Mansoor\FilamentSocialWall\Models\SocialProvider;
 use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
 use Mansoor\FilamentSocialWall\Http\Controllers\SocialAccountController;
-use Abraham\TwitterOAuth\TwitterOAuth;
+use Mansoor\FilamentSocialWall\Models\SocialProvider;
 use Mansoor\FilamentSocialWall\Services\Facebook;
-
 use Mansoor\FilamentSocialWall\Services\YouTube;
 
 Route::get('test', function () {
@@ -17,9 +16,9 @@ Route::get('test', function () {
     // dd($f->getPageFeedCollection(pageId));
 
     $provider = SocialProvider::query()
-            ->whereBelongsToOwner()
-            ->whereProviderName(SocialProviderName::Twitter)
-            ->firstOrFail();
+        ->whereBelongsToOwner()
+        ->whereProviderName(SocialProviderName::Twitter)
+        ->firstOrFail();
 
     $querier = \Atymic\Twitter\Facade\Twitter::forApiV2()
         ->getQuerier();

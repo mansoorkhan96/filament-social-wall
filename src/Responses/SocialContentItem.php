@@ -29,7 +29,7 @@ class SocialContentItem
 
     public readonly SocialProviderName $provider;
 
-    public function __construct(Video | GraphNode $item)
+    public function __construct(Video|GraphNode $item)
     {
         if ($item instanceof Video) {
             $this->fromYoutube($item);
