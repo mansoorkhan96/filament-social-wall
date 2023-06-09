@@ -8,7 +8,9 @@ use Google\Service\YouTube\Video;
 use Illuminate\Support\Arr;
 use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
 
-class SocialContentItem
+// TODO: cleanup, create base class and extend it for each i.e fb, insta, youtube
+
+class SocialWallItem
 {
     public readonly ?string $title;
 
@@ -32,7 +34,7 @@ class SocialContentItem
 
     public readonly SocialProviderName $provider;
 
-    public function __construct(Video|GraphNode $item)
+    public function __construct($item, ?SocialProviderName $socialProvider = null)
     {
         if ($item instanceof Video) {
             $this->fromYoutube($item);
@@ -41,9 +43,23 @@ class SocialContentItem
         if ($item instanceof GraphNode) {
             $this->fromFacebook($item);
         }
+
+        if ($socialProvider === SocialProviderName::Instagram) {
+            $this->fromInstagram($item);
+        }
     }
 
-    public function fromFacebook(GraphNode $item): void
+    protected function fromInstagram(object $item): void
+    {
+        $this->description = $item->caption;
+        $this->imageUrl = $item->media_url;
+        $this->likeCount = $item->like_count;
+        $this->commentCount = $item->comments_count;
+
+        $this->provider = SocialProviderName::Instagram;
+    }
+
+    protected function fromFacebook(GraphNode $item): void
     {
         $this->description = $item->getField('message');
         $this->link = $item->getField('permalink_url');
@@ -51,6 +67,7 @@ class SocialContentItem
         $this->likeCount = Arr::get($item->getField('likes')->getMetaData(), 'summary.total_count');
         $this->commentCount = Arr::get($item->getField('comments')->getMetaData(), 'summary.total_count');
 
+        // TODO: there could be multiple attachments, but we are taking current/first one for now
         if ($item->getField('attachments') instanceof GraphEdge) {
             $this->attachment = new Attachment($item->getField('attachments')->getIterator()->current());
         }
@@ -58,7 +75,7 @@ class SocialContentItem
         $this->provider = SocialProviderName::Facebook;
     }
 
-    public function fromYoutube(Video $item): void
+    protected function fromYoutube(Video $item): void
     {
         $this->title = $item->getSnippet()->getTitle();
         $this->description = $item->getSnippet()->getDescription();

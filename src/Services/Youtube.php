@@ -5,12 +5,11 @@ namespace Mansoor\FilamentSocialWall\Services;
 use Google\Client;
 use Google\Service\YouTube as YouTubeService;
 use Google\Service\YouTube\VideoListResponse;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
-use Mansoor\FilamentSocialWall\Exceptions\SocialAccountNotConnected;
+use Mansoor\FilamentSocialWall\Exceptions\Exception;
 use Mansoor\FilamentSocialWall\Models\SocialProvider;
-use Mansoor\FilamentSocialWall\Responses\SocialContentItem;
+use Mansoor\FilamentSocialWall\Responses\SocialWallItem;
 
 class YouTube
 {
@@ -20,14 +19,11 @@ class YouTube
     {
         try {
             $provider = SocialProvider::query()
-                ->when(
-                    filled(config('filament-social-wall.social_provider_relation')),
-                    fn (Builder $query) => $query->whereBelongsTo(\App\Models\Website::current(), 'owner')
-                )
+                ->whereBelongsToOwner()
                 ->whereProviderName(SocialProviderName::Google)->firstOrFail();
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $th) {
             // TODO: a better approach other than throwing exception may be? User will have other accounts connected and this might annoy.
-            throw new SocialAccountNotConnected('Instagram account not connected.', 404);
+            throw new Exception('YouTube account not connected.', 404);
         }
 
         $client = new Client([
@@ -43,12 +39,9 @@ class YouTube
     public function getVideoList(): Collection
     {
         return collect($this->getVideos())
-            ->map(fn ($item) => new SocialContentItem($item));
+            ->map(fn ($item) => new SocialWallItem($item));
     }
 
-    /**
-     * Raw response from Google Youtube Service
-     */
     public function getVideos(): VideoListResponse
     {
         return $this->service->videos->listVideos(

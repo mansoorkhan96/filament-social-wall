@@ -3,7 +3,6 @@
 namespace Mansoor\FilamentSocialWall\Widgets;
 
 use Filament\Widgets\Widget;
-use Illuminate\Database\Eloquent\Builder;
 use Mansoor\FilamentSocialWall\Models\SocialProvider;
 
 class ConnectSocialMediaWidget extends Widget
@@ -20,10 +19,7 @@ class ConnectSocialMediaWidget extends Widget
          */
         return [
             'socialProviders' => SocialProvider::query()
-                ->when(
-                    filled(config('filament-social-wall.social_provider_relation')),
-                    fn (Builder $query) => $query->whereBelongsTo(\App\Models\Website::current(), 'owner')
-                )
+                ->whereBelongsToOwner()
                 ->pluck('provider_name'),
         ];
     }

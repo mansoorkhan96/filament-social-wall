@@ -7,13 +7,21 @@ use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
 use Mansoor\FilamentSocialWall\Http\Controllers\SocialAccountController;
 use Mansoor\FilamentSocialWall\Models\SocialProvider;
 use Mansoor\FilamentSocialWall\Services\Facebook;
+use Mansoor\FilamentSocialWall\Services\Instagram;
+use Mansoor\FilamentSocialWall\Services\SocialWall;
 use Mansoor\FilamentSocialWall\Services\YouTube;
 
 Route::get('test', function () {
     // $y = new YouTube;
     // dd($y->getVideoList());
-    $f = new Facebook;
-    dd($f->getPageFeed(22));
+    // $f = new Facebook;
+    // dd($f->getPageFeed(env('FACEBOOK_PAGE_ID')));
+
+    // $i = new Instagram;
+    // dd($i->getFeed());
+
+    $d = new SocialWall;
+    dd($d->getData(env('FACEBOOK_PAGE_ID')));
 
     $provider = SocialProvider::query()
         ->whereBelongsToOwner()

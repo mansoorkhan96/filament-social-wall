@@ -5,56 +5,29 @@ namespace Mansoor\FilamentSocialWall\Services;
 use Facebook\GraphNode\GraphEdge;
 use Facebook\GraphNode\GraphNode;
 use Illuminate\Support\Collection;
-use JoelButcher\Facebook\Facebook as FacebookService;
-use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
-use Mansoor\FilamentSocialWall\Models\SocialProvider;
-use Mansoor\FilamentSocialWall\Responses\SocialContentItem;
+use Mansoor\FilamentSocialWall\Responses\SocialWallItem;
 
-class Facebook
+class Facebook extends BaseGraphService
 {
-    public FacebookService $service;
-
-    public function __construct()
+    public function getPageFeedCollection(string|int $pageId, int $perPage = 10): Collection
     {
-        $provider = SocialProvider::query()
-            ->whereBelongsToOwner()
-            ->whereProviderName(SocialProviderName::Facebook)
-            ->firstOrFail();
+        $pageFeed = $this->getPageFeed($pageId, $perPage)->getIterator();
 
-        $this->service = new FacebookService([
-            'app_id' => config('services.facebook.client_id'),
-            'app_secret' => config('services.facebook.client_secret'),
-            'default_graph_version' => 'v17.0',
-        ]);
-
-        $this->service->setDefaultAccessToken($provider->token);
-    }
-
-    public function getPageFeedCollection(string|int $pageId): Collection
-    {
-        return collect($this->getPageFeed($pageId)->getIterator())
+        return collect($pageFeed)
             ->filter(fn (GraphNode $item) => filled($item->getField('from')))
-            ->map(fn ($item) => new SocialContentItem($item));
+            ->map(fn ($item) => new SocialWallItem($item));
     }
 
-    public function getPageFeed(string|int $pageId, int $perPage = 20): GraphEdge
+    public function getPageFeed(string|int $pageId, int $perPage = 10): GraphEdge
     {
         /**
-         * TODO: situation => /me/accounts endpoint should give us list of pages a user can manage, but
-         *
-         * 1) When a user has two pages and he is admin on one. After oauth access, we get data for one page i.e the other page from above endpoint
-         * 2) If a user selects or give us permission to only one page which he is admin on, we get no data with above endpoint
-         * 3) If a user selects or give us permission to only one page which he is not admin on, we get for that one page only.
-         *
-         * Need to find out, how we can automagically get page ids for user without asking them to give us manually.
-         *
-         * for now: this service requires pageId for simplicity and POC
+         * TODO: Support batch request to send it for multiple page feeds
+         * TODO: get pageId(s) from $this->getUserAccounts()
          */
 
         return $this->service->get("/{$pageId}/feed", [
             'fields' => 'id,created_time,message,from,full_picture,permalink_url,likes.limit(0).summary(true),comments.limit(0).summary(true),attachments{unshimmed_url,description,media,title}',
             'limit' => $perPage,
-            'is_published' => true,
         ])->getGraphEdge();
     }
 }
