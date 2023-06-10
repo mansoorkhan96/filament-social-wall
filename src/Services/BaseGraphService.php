@@ -44,12 +44,12 @@ class BaseGraphService
             );
     }
 
-    protected function getUserPermissions(): Collection
-    {
-        $permissions = $this->service->get('/me/permissions')->getDecodedBody();
+     public function getUserPermissions(): Collection
+     {
+         $permissions = $this->service->get('/me/permissions')->getDecodedBody();
 
-        return collect($permissions)
-            ->flatten(1)
-            ->pluck('permission');
-    }
+         return collect($permissions)
+             ->flatten(1)
+             ->pluck('permission');
+     }
 }

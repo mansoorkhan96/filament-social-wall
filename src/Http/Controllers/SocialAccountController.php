@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller;
 use Laravel\Socialite\Facades\Socialite;
 use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
 use Mansoor\FilamentSocialWall\Models\SocialProvider;
-use Mansoor\FilamentSocialWall\Services\Facebook;
 
 class SocialAccountController extends Controller
 {
@@ -78,21 +77,12 @@ class SocialAccountController extends Controller
             ]
         );
 
-        // TODO: create a provider in instagram if
-        // $facebook->getUserPermissions() code does not work due to invalid token, may be session and cookes are not set yet.
-        // Add ->state(['provider' => 'fb']) and check if its set in request?
+        // TODO: this is a work-around
+        if ($provider === SocialProviderName::Facebook) {
+            return to_route('update.instagram.provider');
+        }
 
-        // if ($provider === SocialProviderName::Facebook) {
-        //     $facebook = new Facebook;
-
-        //     if ($facebook->getUserPermissions()->contains('instagram_basic')) {
-        //         SocialProvider::updateOrCreate([
-        //             'website_id' => $websiteId,
-        //             'provider_name' => SocialProviderName::Instagram,
-        //         ]);
-        //     }
-        // }
-
+        // TODO: replace with config('redirect_url')
         return redirect("/admin/websites/{$websiteId}/edit");
     }
 }

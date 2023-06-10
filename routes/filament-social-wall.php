@@ -76,4 +76,25 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     Route::get('/social/{provider}/callback', [SocialAccountController::class, 'handleProviderCallback'])
         ->name('social.provider.callback');
+
+    Route::get('update-instagram-provider', function () {
+        $websiteId = \App\Models\Website::current()?->id;
+
+        $facebook = new Facebook;
+
+        if ($facebook->getUserPermissions()->contains('instagram_basic')) {
+            SocialProvider::updateOrCreate([
+                'website_id' => $websiteId,
+                'provider_name' => SocialProviderName::Instagram,
+            ]);
+        } else {
+            SocialProvider::whereBelongsToOwner()
+                ->whereBelongsToOwner()
+                ->whereProviderName(SocialProviderName::Instagram)
+                ->delete();
+        }
+
+        // TODO: replace with config('redirect_url')
+        return redirect("/admin/websites/{$websiteId}/edit");
+    })->name('update.instagram.provider');
 });

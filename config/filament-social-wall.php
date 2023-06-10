@@ -1,6 +1,5 @@
 <?php
 
-// config for Mansoor/FilamentSocialWall
 return [
     /**
      * This is where you specify if the social provider belongs to another model e.g. App\Models\User
@@ -9,5 +8,6 @@ return [
      * Example: social_provider_relation' => App\Models\User::class,
      */
     'social_provider_relation' => null,
+
     'redirect_after_callback' => '/admin', // TODO: can we accept dynamic route
 ];
