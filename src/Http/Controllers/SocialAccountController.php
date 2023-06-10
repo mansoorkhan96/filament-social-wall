@@ -24,7 +24,7 @@ class SocialAccountController extends Controller
         //     $socialite->scopes(['offline.access', 'users.read', 'tweet.read']);
         // }
 
-        if ($provider === SocialProviderName::Google) {
+        if ($provider === SocialProviderName::Youtube) {
             $socialite
                 ->scopes(['https://www.googleapis.com/auth/youtube.readonly'])
                 ->with(['access_type' => 'offline', 'prompt' => 'consent select_account']);

@@ -20,15 +20,15 @@ class YouTube
         try {
             $provider = SocialProvider::query()
                 ->whereBelongsToOwner()
-                ->whereProviderName(SocialProviderName::Google)->firstOrFail();
+                ->whereProviderName(SocialProviderName::Youtube)->firstOrFail();
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $th) {
             // TODO: a better approach other than throwing exception may be? User will have other accounts connected and this might annoy.
             throw new Exception('YouTube account not connected.', 404);
         }
 
         $client = new Client([
-            'client_id' => config('services.google.client_id'),
-            'client_secret' => config('services.google.client_secret'),
+            'client_id' => config('services.youtube.client_id'),
+            'client_secret' => config('services.youtube.client_secret'),
         ]);
         $client->setAccessToken($provider->token);
         $client->refreshToken($provider->refresh_token);
