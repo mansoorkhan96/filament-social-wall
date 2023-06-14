@@ -5,7 +5,7 @@ namespace Mansoor\FilamentSocialWall\Services;
 use Facebook\GraphNode\GraphEdge;
 use Facebook\GraphNode\GraphNode;
 use Illuminate\Support\Collection;
-use Mansoor\FilamentSocialWall\Responses\SocialWallItem;
+use Mansoor\FilamentSocialWall\Responses\FacebookResponse;
 
 class Facebook extends BaseGraphService
 {
@@ -15,7 +15,7 @@ class Facebook extends BaseGraphService
 
         return collect($pageFeed)
             ->filter(fn (GraphNode $item) => filled($item->getField('from')))
-            ->map(fn ($item) => new SocialWallItem($item));
+            ->map(fn ($item) => new FacebookResponse($item));
     }
 
     public function getPageFeed(string|int $pageId, int $perPage = 10): GraphEdge

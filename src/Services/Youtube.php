@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
 use Mansoor\FilamentSocialWall\Exceptions\Exception;
 use Mansoor\FilamentSocialWall\Models\SocialProvider;
-use Mansoor\FilamentSocialWall\Responses\SocialWallItem;
+use Mansoor\FilamentSocialWall\Responses\YouTubeResponse;
 
 class YouTube
 {
@@ -39,11 +39,12 @@ class YouTube
     public function getVideoList(): Collection
     {
         return collect($this->getVideos())
-            ->map(fn ($item) => new SocialWallItem($item));
+            ->map(fn ($item) => new YouTubeResponse($item));
     }
 
     public function getVideos(): VideoListResponse
     {
+        // TODO: add option to specifiy: channel or playist etc
         return $this->service->videos->listVideos(
             ['player', 'snippet', 'statistics'],
             ['chart' => 'mostPopular']

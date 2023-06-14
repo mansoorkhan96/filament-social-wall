@@ -4,7 +4,7 @@ namespace Mansoor\FilamentSocialWall\Responses;
 
 use Google\Service\YouTube\ThumbnailDetails;
 
-class SocialThumbnail
+class YouTubeThumbnail
 {
     public readonly ?string $default;
 
@@ -17,13 +17,6 @@ class SocialThumbnail
     public readonly ?string $maxres;
 
     public function __construct(ThumbnailDetails $thumbnails)
-    {
-        if ($thumbnails instanceof ThumbnailDetails) {
-            $this->fromYoutube($thumbnails);
-        }
-    }
-
-    public function fromYoutube(ThumbnailDetails $thumbnails)
     {
         $this->default = $thumbnails->getDefault()?->getUrl();
         $this->medium = $thumbnails->getMedium()?->getUrl();

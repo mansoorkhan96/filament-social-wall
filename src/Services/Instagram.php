@@ -2,9 +2,8 @@
 
 namespace Mansoor\FilamentSocialWall\Services;
 
-use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
 use Mansoor\FilamentSocialWall\Exceptions\Exception;
-use Mansoor\FilamentSocialWall\Responses\SocialWallItem;
+use Mansoor\FilamentSocialWall\Responses\InstagramResponse;
 
 class Instagram extends BaseGraphService
 {
@@ -46,6 +45,6 @@ class Instagram extends BaseGraphService
                     : null
             )
             ->filter()
-            ->map(fn ($item) => new SocialWallItem(json_decode($item), SocialProviderName::Instagram));
+            ->map(fn ($item) => new InstagramResponse(json_decode($item)));
     }
 }

@@ -9,5 +9,5 @@ return [
      */
     'social_provider_relation' => null,
 
-    'redirect_after_callback' => '/admin', // TODO: can we accept dynamic route
+    'redirect_after_callback' => '/admin',
 ];
