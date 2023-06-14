@@ -37,7 +37,7 @@ final class TwitterManager extends Manager
     private function configOptions(): array
     {
         $provider = SocialProvider::query()
-            ->whereBelongsToOwner()
+            ->whereBelongsToParent()
             ->whereProviderName(SocialProviderName::Twitter)
             ->firstOrFail();
 

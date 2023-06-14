@@ -19,7 +19,7 @@ class YouTube
     {
         try {
             $provider = SocialProvider::query()
-                ->whereBelongsToOwner()
+                ->whereBelongsToParent()
                 ->whereProviderName(SocialProviderName::Youtube)->firstOrFail();
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $th) {
             // TODO: a better approach other than throwing exception may be? User will have other accounts connected and this might annoy.

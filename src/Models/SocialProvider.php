@@ -18,25 +18,30 @@ class SocialProvider extends Model
         'provider_name' => SocialProviderName::class,
     ];
 
-    public function owner(): BelongsTo
+    public function parent(): BelongsTo
     {
         /**
          * @var \Illuminate\Database\Eloquent\Model
          */
-        $relatedModel = new (config('filament-social-wall.social_provider_relation'));
+        $parentModel = new (config('filament-social-wall.parent_model'));
 
         return $this->belongsTo(
-            config('filament-social-wall.social_provider_relation'),
-            $relatedModel->getForeignKey()
+            config('filament-social-wall.parent_model'),
+            $parentModel->getForeignKey()
         );
     }
 
-    public function scopeWhereBelongsToOwner(Builder $query): Builder
+    public function scopeWhereBelongsToParent(Builder $query): Builder
     {
-        // TODO: ::current()
+        if (blank(config('filament-social-wall.parent_model'))) {
+            return $query;
+        }
+
+        $parentModel = new (config('filament-social-wall.parent_model'));
+
         return $query->when(
-            filled(config('filament-social-wall.social_provider_relation')),
-            fn (Builder $query) => $query->whereBelongsTo(\App\Models\Website::current(), 'owner')
+            filled(config('filament-social-wall.parent_model')),
+            fn (Builder $query) => $query->whereBelongsTo($parentModel->current(), 'parent')
         );
     }
 }

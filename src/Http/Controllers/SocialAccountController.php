@@ -47,10 +47,12 @@ class SocialAccountController extends Controller
 
     public function handleProviderCallback(Request $request, SocialProviderName $provider)
     {
-        /**
-         * TODO: \App\Models\Website::current() makes plugin not reusable
-         */
-        $websiteId = \App\Models\Website::current()?->id;
+        $websiteId = null;
+
+        if (filled(config('filament-social-wall.parent_model'))) {
+            $parentModel = new (config('filament-social-wall.parent_model'));
+            $websiteId = $parentModel->current()?->id;
+        }
 
         try {
             $socialAccount = Socialite::driver($provider->value)->user();

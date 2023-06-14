@@ -16,7 +16,7 @@ class BaseGraphService
     {
         // TODO: throw exception for no connection?
         $provider = SocialProvider::query()
-            ->whereBelongsToOwner()
+            ->whereBelongsToParent()
             ->whereProviderName(SocialProviderName::Facebook)
             ->firstOrFail();
 
