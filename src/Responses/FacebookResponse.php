@@ -2,8 +2,8 @@
 
 namespace Mansoor\FilamentSocialWall\Responses;
 
-use Illuminate\Support\Arr;
 use Facebook\GraphNode\GraphNode;
+use Illuminate\Support\Arr;
 use Mansoor\FilamentSocialWall\Enums\SocialProviderName;
 
 class FacebookResponse extends SocialWallResponse
